@@ -1,0 +1,68 @@
+from pizza.actions import available_moves, available_searches, pickup_check
+
+
+class Maproom:
+    def intro_text(self):
+        raise NotImplementedError()
+    
+    def modify_player(self):
+        raise NotImplementedError()
+    
+    def room_actions(self):
+        raise NotImplementedError()
+    
+    def to_search(self):
+        raise NotImplementedError
+    
+    def actually_search(self):
+        raise NotImplementedError
+
+class Bathroom(Maproom):
+    def intro_text(self):
+        return "You enter the bathroom."
+        
+    def modify_player(self, player):
+        pass
+    
+    def room_actions(self):
+        available_moves()
+        available_searches()
+    
+    def to_search(self):
+        available_searches()
+    
+    def cabinet_sink(self):
+        raw_answer = input("You see a toothbrush, item2, and item3. Do you want to examine anything closely?" )
+        answer = raw_answer.lower()
+        if answer == 'toothbrush':
+            #print(toothbrush.description)
+    
+    def actually_search(self):
+        pickup_check()
+
+class Livingroom(Maproom):
+    def intro_text(self):
+        return """
+        Bill enters the living room. He sees a raggedy couch, shoved unceremoniously up against the wall in such a way that no one is able to
+        easily walk by. Across from the couch is a television set, gently illuminating the room with its screen of static. Its crackling reminds Bill 
+        of a fire burning merrily. Except there's no wood, fire, or fireplace. In between the television and the couch is a coffee table heaped with 
+        papers."   
+        """
+    def modify_player(self, player):
+        pass
+class Bedroom(Maproom):
+    def intro_text(self):
+        return """
+        Bill enters the bedroom. It's in horrible disarray.
+        """
+    def modify_player(self, player):
+        pass
+class Kitchen(Maproom):
+    def intro_text(self):
+        return """
+        Bill enters the kitchen.
+        """
+    def modify_player(self, player):
+        pass 
+    
+
