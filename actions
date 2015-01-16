@@ -1,0 +1,110 @@
+from pizza.items import Item
+
+bedroom_count = 0
+livingroom_count = 0
+bathroom_count = 0
+kitchen_count = 0
+inventory = []
+
+print("""You wake up with a splitting headache and an insatiable desire for pizza. You have woken up in your bedroom, in a state of virtual
+undress (you have your socks on). You stare blearily around the room, feeling nothing but your dry mouth and a desire to eat gooey cheese on
+bread.""")
+
+current_room = "bathroom"
+
+def error_message():
+    print("This part of the game has not yet been written.")
+
+
+def user_input():
+    raw_input = input("What would you like to do? ")
+    return raw_input.lower()
+
+def available_moves():
+    if current_room == 'kitchen':
+        print("You can go to the living room (on the east wall).")
+    elif current_room == 'bedroom' and bedroom_count == 0:
+        print("""You can go through one of the two doors you see. One is on the south wall, the other is on the west wall.""")
+    elif current_room == 'bedroom' and livingroom_count == 1 and bathroom_count == 0:
+        print("You can go back to the living room (on the west wall), or through the unopened door on the south wall.")
+    elif current_room == 'bedroom' and livingroom_count == 0 and bathroom_count == 1:
+        print("You can go back to the bathroom (on the east wall), or through the unopened door on the west wall.")
+    elif current_room == 'bedroom' and livingroom_count > 0 and bathroom_count > 0:
+        print("You can go to the bathroom (south) or to the living room (west).")
+    elif current_room == 'living room' and bathroom_count == 0 and kitchen_count == 0:
+        print("You can go back to the bedroom, or through one of the two doors. One is on the south wall, the other on the west.")
+    elif current_room == 'living room' and kitchen_count == 1 and bathroom_count == 0:
+        print("You can go to the bedroom (east), the kitchen (west), or the unopened door on the southern wall.")
+    elif current_room == 'living room' and kitchen_count == 0 and bathroom_count == 1:
+        print("You can go through the unopened door on the western wall, the bedroom (east) or the bathroom (south).")
+    elif current_room == 'living room' and kitchen_count > 0 and bathroom_count > 0:
+        print("You can go to the kitchen (west), the bedroom (east), or the bathroom (south).")
+    elif current_room == 'bathroom' and livingroom_count == 0:
+        print("You can go back to the bedroom (northwest) or through the unopened door on the northeastern part of the wall.")
+    elif current_room == 'bathroom' and livingroom_count > 1:
+        print("You can go to the living room (northeast) or the bedroom (northwest).")
+
+def available_searches():
+    if current_room == 'bathroom':
+        print("You can search the medicine cabinet and sink area (1) or the tub area (2).")
+        response = user_input()
+        while(response != "b" or "back" or "go back"):
+            if response == 1:
+                print("You see a toothbrush (1) and SOME OTHER STUFF THAT GOES IN THE MEDICINE CABINET TO BE DETERMINED AT A LATER DATE (2).")
+                response = user_input()
+                if response == 1:
+                    toothbrush = Item()
+                    toothbrush.__init__("toothbrush", "A ratty toothbrush that clearly needs to be replaced, but still gives off the aura of not being frequently used.")
+                    print(toothbrush.__str__())
+                elif response == 2:
+                    item2 = Item()
+                    item2.__init__("item2", "this is item 2 in the sink area")
+                    print(item2.__str__())
+                else:
+                    error_message()    
+            elif response == 2:
+                response = input("You see shampoo (1), fancy shampoo (2), and a sad bar of soap (3). Pick something up or go back (b): ")
+                error_message()
+    elif current_room == 'living room':
+        print("You can search in the couch (1), on top of the couch (2), or behind the TV (3).")
+    elif current_room == 'bedroom':
+        print("You can search under the bed (1), on the desk (2), or on the floor (3).")
+    #elif current_room == 'kitchen': FILL THIS SHIT IN
+        #print()
+
+def view_inventory():
+    print(inventory)
+
+def add_to_inventory(item):
+    inventory.append(item)
+    if len(inventory) == 4:
+        print("You are holding five things. You are on the verge of dropping them. Do not try to hold any more things.")
+        view_inventory()
+    elif len(inventory) > 4:
+        print("You tried to hold more than five things and subsequently dropped all of them. You pick up the items you were holding originally.")
+        drop_last_item()
+        view_inventory()
+    elif len(inventory) < 4:
+        view_inventory()
+
+def drop_last_item():
+    inventory.pop(4)
+    #BE SURE TO INCLUDE THE LOGIC BEHIND PUTTING THE OBJECT BACK IN THE ROOM
+
+def pickup_check():
+    i = 0
+    while (i == 0):
+        raw_answer = input("Do you want to pick this item up? ")
+        answer = raw_answer.lower()
+        if answer == "yes" or "y" or "yeah" or "yup":
+            add_to_inventory()
+            i = -1
+        elif answer == "nope" or "nah" or "naw" or "no":
+            pass
+            i = -1
+        else:
+            print("That was not a valid answer. Please try again.")
+    
+
+      
+        
